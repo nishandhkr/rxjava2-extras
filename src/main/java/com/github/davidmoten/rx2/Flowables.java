@@ -303,6 +303,17 @@ public final class Flowables {
         Runnable action = new Runnable() {
             @Override
             public void run() {
+                System.out.println("[" + System.currentTimeMillis() + "][" + Thread.currentThread().getName()
+                        + "] Flowables$4.run(): scheduled reset runs on its own thread");
+                try {
+                    System.out.println("[" + System.currentTimeMillis() + "][" + Thread.currentThread().getName()
+                            + "] Flowables$4.run(): Delay Injected Sleep (1000ms)");
+                    Thread.sleep(1000);
+                    System.out.println("[" + System.currentTimeMillis() + "][" + Thread.currentThread().getName()
+                            + "] Flowables$4.run(): After Sleep end");
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
                 cacheRef.get().reset();
             }
         };

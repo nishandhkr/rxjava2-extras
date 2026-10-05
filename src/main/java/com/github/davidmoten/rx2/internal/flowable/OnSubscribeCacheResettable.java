@@ -18,12 +18,19 @@ public final class OnSubscribeCacheResettable<T>{
 
     public void subscribe(final Subscriber<? super T> subscriber) {
         if (refresh.compareAndSet(true, false)) {
+            System.out.println("[" + System.currentTimeMillis() + "][" + Thread.currentThread().getName()
+                    + "] OnSubscribeCacheResettable.subscribe(): refresh true new cache");
             current = source.cache();
+        } else {
+            System.out.println("[" + System.currentTimeMillis() + "][" + Thread.currentThread().getName()
+                    + "] OnSubscribeCacheResettable.subscribe(): refresh false reuse cache");
         }
         current.subscribe(subscriber);
     }
 
     public void reset() {
+        System.out.println("[" + System.currentTimeMillis() + "][" + Thread.currentThread().getName()
+                + "] OnSubscribeCacheResettable.reset(): refresh.set(true) reset has completed.");
         refresh.set(true);
     }
 

@@ -49,6 +49,8 @@ public class FlowablesTest {
             }
         });
 
+        long start = System.currentTimeMillis();
+        System.out.println("[" + System.currentTimeMillis() + "][" + Thread.currentThread().getName() + "] ===== t=0 : subscribe #1 =====");
         timed.subscribe();
 
         try {
@@ -57,6 +59,8 @@ public class FlowablesTest {
             e.printStackTrace();
         }
 
+        System.out.println("[" + System.currentTimeMillis() + "][" + Thread.currentThread().getName()
+                + "] ===== t=" + (System.currentTimeMillis() - start) + "ms : subscribe #2 =====");
         timed.subscribe();
         try {
             Thread.sleep(4000);
@@ -64,8 +68,12 @@ public class FlowablesTest {
             e.printStackTrace();
         }
 
+        System.out.println("[" + System.currentTimeMillis() + "][" + Thread.currentThread().getName()
+                + "] ===== t=" + (System.currentTimeMillis() - start) + "ms : subscribe #3 =====");
         timed.subscribe();
 
+        System.out.println("[" + System.currentTimeMillis() + "][" + Thread.currentThread().getName()
+                + "] ===== final subscriptionCount = " + subscriptionCount.get() + " (expected 2) =====");
         assertTrue(subscriptionCount.get() == 2);
     }
     
